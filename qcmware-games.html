@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qcmware | GAMES</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            box-shadow: inset .5px .5px 20px #fffefe6b;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <img src="assets/img/kassandra_front.jpg" hidden alt="kassandra-front" id="kassandra-front">
+    <img src="assets/img/kassandra_back.jpg" hidden alt="kassandra-back" id="kassandra-back">
+    <script>
+        const game_canvas = document.getElementsByTagName("canvas").item(0)
+        const d2_game = game_canvas.getContext('2d')
+        game_canvas.width = window.innerWidth * .9
+        game_canvas.height = game_canvas.width * .6
+        const kassandra = {
+            angle: 0,
+            location: {
+                x: 0.5, y: 1.1
+            },
+            scale: 1,
+            __size: {
+                __height: 168,
+                __width: 46
+            },
+            textures: {
+                front: document.getElementById("kassandra-front"),
+                back: document.getElementById("kassandra-back")
+            }
+        }
+
+        function draw(object) {
+            const srcImage = object?.textures?.front;
+            const objX = game_canvas.width * object?.location?.x - (object.__size.__width / 2)
+            const objY = (game_canvas.height * object?.location?.y / 2) - (object.__size.__height / 2)
+            d2_game.drawImage(
+                srcImage ?? document.getElementsByTagName("img").item(0),262.5,32, 300, 300,
+                objX ?? 0,
+                objY ?? 0,
+                300,
+                300
+            )
+        }
+        function loop() {
+            draw(kassandra)
+            window.requestAnimationFrame(loop)
+        }
+        loop()
+    </script>
+</body>
+
+</html>

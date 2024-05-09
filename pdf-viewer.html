@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF VIEWER</title>
+</head>
+
+<body>
+    <object id="pdf_file" type="application/pdf" width="100%" height="100%">
+        <a href="myfile.pdf">Download it!</a>
+    </object>
+    <script>
+        const obj = document.getElementById("pdf_file")
+        const query = location?.search?.substring(1)
+        const query_json = query.replace(/"/g, '\"').replace(/&/g, '","').replace(/=/g, '":"')
+        if (query_json.length > 0){
+            obj.data = JSON.parse(`{"${query_json}"}`)?.f 
+            obj.querySelector('a').href = obj.data
+        }
+    </script>
+</body>
+
+</html>
